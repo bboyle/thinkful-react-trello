@@ -1,0 +1,33 @@
+{
+  "name": "react-trello",
+  "version": "1.0.0",
+  "description": "Exercise: Create Trello-style components",
+  "main": "index.js",
+  "scripts": {
+    "mkdir": "mkdir build",
+    "build": "npm run-script clean && npm run-script mkdir && npm run-script build:html && npm run-script build:js",
+    "watch": "npm run-script watch:html & npm run-script watch:js",
+    "clean": "rm -rf build",
+    "build:html": "npm run-script clean:html && cp index.html build/",
+    "watch:html": "npm run-script build:html && chokidar index.html -c \"npm run-script build:html\"",
+    "clean:html": "rm -f build/index.html",
+    "build:js": "npm run-script clean:js && webpack",
+    "watch:js": "npm run-script build:js && webpack --watch",
+    "clean:js": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Boyle <benjamins.boyle@gmail.com> (http://ultimate.benboyle.id.au)",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "chokidar-cli": "^1.2.0",
+    "webpack": "^1.13.2"
+  }
+}
