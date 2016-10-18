@@ -49,36 +49,56 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
 	
-	var Card = function Card() {
-		return React.createElement(
-			'div',
-			{ className: 'card' },
-			'This is a card'
-		);
-	};
+	var Card = React.createClass({
+		displayName: 'Card',
 	
-	var List = function List() {
-		return React.createElement(
-			'div',
-			{ className: 'list' },
-			React.createElement(Card, null),
-			React.createElement(Card, null),
-			React.createElement(Card, null)
-		);
-	};
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'card' },
+				this.props.text
+			);
+		}
+	});
 	
-	var Board = function Board() {
-		return React.createElement(
-			'div',
-			{ className: 'board' },
-			React.createElement(List, null),
-			React.createElement(List, null),
-			React.createElement(List, null)
-		);
-	};
+	var List = React.createClass({
+		displayName: 'List',
+	
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'list' },
+				React.createElement(
+					'h2',
+					null,
+					this.props.title
+				),
+				this.props.cards.map(function (contents) {
+					return React.createElement(Card, { text: contents });
+				})
+			);
+		}
+	});
+	
+	var Board = React.createClass({
+		displayName: 'Board',
+	
+		render: function render() {
+			var cards = ["This is a card", "This is a card", "This is a card"];
+	
+			return React.createElement(
+				'div',
+				{ className: 'board' },
+				this.props.lists.map(function (listTitle) {
+					return React.createElement(List, { title: listTitle, cards: cards });
+				})
+			);
+		}
+	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
-		ReactDOM.render(React.createElement(Board, null), document.getElementById('app'));
+		var lists = ["To Do", "Doing", "Done"];
+		ReactDOM.render(React.createElement(Board, { title: 'Trello-like board', lists: lists }), document.getElementById('app'));
 	});
 
 /***/ },
@@ -21450,4 +21470,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=react-trello.1.0.0.js.map
+//# sourceMappingURL=react-trello.1.1.2.js.map
