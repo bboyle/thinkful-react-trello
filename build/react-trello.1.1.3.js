@@ -64,6 +64,11 @@
 	var List = React.createClass({
 		displayName: 'List',
 	
+		submit: function submit(event) {
+			event.preventDefault();
+			this.props.onAddSubmit();
+		},
+	
 		render: function render() {
 			return React.createElement(
 				'div',
@@ -75,7 +80,17 @@
 				),
 				this.props.cards.map(function (contents) {
 					return React.createElement(Card, { text: contents });
-				})
+				}),
+				React.createElement(
+					'form',
+					{ onSubmit: this.submit },
+					React.createElement('input', { onChange: this.props.onAddInputChange }),
+					React.createElement(
+						'button',
+						{ type: 'submit' },
+						'Add'
+					)
+				)
 			);
 		}
 	});
@@ -83,14 +98,24 @@
 	var Board = React.createClass({
 		displayName: 'Board',
 	
+		onAddSubmit: function onAddSubmit() {
+			console.info('Board.onAddSubmit()');
+		},
+	
+		onAddInputChange: function onAddInputChange() {
+			console.info('Board.onAddInputChange()');
+		},
+	
 		render: function render() {
+			var _this = this;
+	
 			var cards = ["This is a card", "This is a card", "This is a card"];
 	
 			return React.createElement(
 				'div',
 				{ className: 'board' },
 				this.props.lists.map(function (listTitle) {
-					return React.createElement(List, { title: listTitle, cards: cards });
+					return React.createElement(List, { title: listTitle, cards: cards, onAddSubmit: _this.onAddSubmit, onAddInputChange: _this.onAddInputChange });
 				})
 			);
 		}
@@ -21470,4 +21495,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=react-trello.1.1.2.js.map
+//# sourceMappingURL=react-trello.1.1.3.js.map

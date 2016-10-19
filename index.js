@@ -12,6 +12,11 @@ var Card = React.createClass({
 });
 
 var List = React.createClass({
+	submit: function(event) {
+		event.preventDefault();
+		this.props.onAddSubmit();
+	},
+
 	render: function() {
 		return (
 			<div className="list">
@@ -19,19 +24,31 @@ var List = React.createClass({
 				{this.props.cards.map((contents) => (
 					<Card text={contents} />
 				))}
+				<form onSubmit={this.submit}>
+					<input onChange={this.props.onAddInputChange} />
+					<button type="submit">Add</button>
+				</form>
 			</div>
 		);
 	}
 });
 
 var Board = React.createClass({
+	onAddSubmit: function() {
+		console.info('Board.onAddSubmit()');
+	},
+
+	onAddInputChange: function() {
+		console.info('Board.onAddInputChange()');
+	},
+
 	render: function() {
 		var cards = ["This is a card", "This is a card", "This is a card"];
 
 		return (
 			<div className="board">
 				{this.props.lists.map((listTitle) => (
-					<List title={listTitle} cards={cards} />
+					<List title={listTitle} cards={cards} onAddSubmit={this.onAddSubmit} onAddInputChange={this.onAddInputChange} />
 				))}
 			</div>
 		);
