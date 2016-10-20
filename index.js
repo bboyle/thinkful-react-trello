@@ -56,8 +56,6 @@ var ListContainer = React.createClass({
 
 var Board = React.createClass({
 	render: function() {
-		var cards = ["This is a card", "This is a card", "This is a card"];
-
 		return (
 			<div className="board">
 				{this.props.lists.map((listTitle) => (

@@ -120,8 +120,6 @@
 		displayName: 'Board',
 	
 		render: function render() {
-			var cards = ["This is a card", "This is a card", "This is a card"];
-	
 			return React.createElement(
 				'div',
 				{ className: 'board' },
