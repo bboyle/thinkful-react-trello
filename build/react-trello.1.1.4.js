@@ -67,6 +67,7 @@
 		submit: function submit(event) {
 			event.preventDefault();
 			this.props.onAddSubmit();
+			event.target.reset();
 		},
 	
 		render: function render() {
@@ -95,27 +96,40 @@
 		}
 	});
 	
-	var Board = React.createClass({
-		displayName: 'Board',
+	var ListContainer = React.createClass({
+		displayName: 'ListContainer',
 	
-		onAddSubmit: function onAddSubmit() {
-			console.info('Board.onAddSubmit()');
+		getInitialState: function getInitialState() {
+			return {
+				inputText: "",
+				cards: []
+			};
 		},
 	
-		onAddInputChange: function onAddInputChange() {
-			console.info('Board.onAddInputChange()');
+		onAddInputChange: function onAddInputChange(event) {
+			this.setState({ inputText: event.target.value });
+		},
+	
+		onAddSubmit: function onAddSubmit() {
+			this.setState({ cards: this.state.cards.concat(this.state.inputText) });
 		},
 	
 		render: function render() {
-			var _this = this;
+			return React.createElement(List, { title: this.props.title, cards: this.state.cards, onAddSubmit: this.onAddSubmit, onAddInputChange: this.onAddInputChange });
+		}
+	});
 	
+	var Board = React.createClass({
+		displayName: 'Board',
+	
+		render: function render() {
 			var cards = ["This is a card", "This is a card", "This is a card"];
 	
 			return React.createElement(
 				'div',
 				{ className: 'board' },
 				this.props.lists.map(function (listTitle) {
-					return React.createElement(List, { title: listTitle, cards: cards, onAddSubmit: _this.onAddSubmit, onAddInputChange: _this.onAddInputChange });
+					return React.createElement(ListContainer, { title: listTitle });
 				})
 			);
 		}
@@ -21495,4 +21509,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=react-trello.1.1.3.js.map
+//# sourceMappingURL=react-trello.1.1.4.js.map
