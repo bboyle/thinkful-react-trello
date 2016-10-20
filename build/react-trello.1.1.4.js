@@ -66,8 +66,10 @@
 	
 		submit: function submit(event) {
 			event.preventDefault();
-			this.props.onAddSubmit();
-			event.target.reset();
+	
+			var form = event.target;
+			this.props.onAddSubmit(form.add.value);
+			form.reset();
 		},
 	
 		render: function render() {
@@ -85,7 +87,7 @@
 				React.createElement(
 					'form',
 					{ onSubmit: this.submit },
-					React.createElement('input', { onChange: this.props.onAddInputChange }),
+					React.createElement('input', { name: 'add' }),
 					React.createElement(
 						'button',
 						{ type: 'submit' },
@@ -101,21 +103,16 @@
 	
 		getInitialState: function getInitialState() {
 			return {
-				inputText: "",
 				cards: []
 			};
 		},
 	
-		onAddInputChange: function onAddInputChange(event) {
-			this.setState({ inputText: event.target.value });
-		},
-	
-		onAddSubmit: function onAddSubmit() {
-			this.setState({ cards: this.state.cards.concat(this.state.inputText) });
+		onAddSubmit: function onAddSubmit(value) {
+			this.setState({ cards: this.state.cards.concat(value) });
 		},
 	
 		render: function render() {
-			return React.createElement(List, { title: this.props.title, cards: this.state.cards, onAddSubmit: this.onAddSubmit, onAddInputChange: this.onAddInputChange });
+			return React.createElement(List, { title: this.props.title, cards: this.state.cards, onAddSubmit: this.onAddSubmit });
 		}
 	});
 	

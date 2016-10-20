@@ -12,21 +12,23 @@ var Card = React.createClass({
 });
 
 var List = React.createClass({
-	submit: function(event) {
+	submit: function( event ) {
 		event.preventDefault();
-		this.props.onAddSubmit();
-		event.target.reset();
+
+		let form = event.target;
+		this.props.onAddSubmit( form.add.value );
+		form.reset();
 	},
 
 	render: function() {
 		return (
 			<div className="list">
 				<h2>{this.props.title}</h2>
-				{this.props.cards.map((contents) => (
+				{this.props.cards.map(( contents ) => (
 					<Card text={contents} />
 				))}
 				<form onSubmit={this.submit}>
-					<input onChange={this.props.onAddInputChange} />
+					<input name="add" />
 					<button type="submit">Add</button>
 				</form>
 			</div>
@@ -37,22 +39,17 @@ var List = React.createClass({
 var ListContainer = React.createClass({
 	getInitialState: function() {
 		return {
-			inputText: "",
 			cards: []
 		};
 	},
 
-	onAddInputChange: function(event) {
-		this.setState({ inputText: event.target.value });
-	},
-
-	onAddSubmit: function() {
-		this.setState({ cards: this.state.cards.concat( this.state.inputText ) });
+	onAddSubmit: function(value) {
+		this.setState({ cards: this.state.cards.concat( value ) });
 	},
 
 	render: function() {
 		return (
-			<List title={this.props.title} cards={this.state.cards} onAddSubmit={this.onAddSubmit} onAddInputChange={this.onAddInputChange} />
+			<List title={this.props.title} cards={this.state.cards} onAddSubmit={this.onAddSubmit} />
 		);
 	}
 });
@@ -71,7 +68,7 @@ var Board = React.createClass({
 	}
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-	var lists = ["To Do", "Doing", "Done"];
-	ReactDOM.render(<Board title="Trello-like board" lists={lists} />, document.getElementById('app'));
+document.addEventListener( 'DOMContentLoaded', function() {
+	var lists = [ "To Do", "Doing", "Done" ];
+	ReactDOM.render( <Board title="Trello-like board" lists={lists} />, document.getElementById( 'app' ));
 });
